@@ -4,8 +4,25 @@ resource "aws_vpc" "terraform_vpc" {
 
   tags = {
     Name = "clc15-tf-vpc"
-    CC = 123456
+    CC = 1234567
     Owner = "Devops"
+  }
+}
+
+# Correcao primeira issue
+resource "aws_flow_log" "example" {
+  log_destination      = "arn:aws:s3:::clc15-gustavo-terraform"
+  log_destination_type = "s3"
+  traffic_type         = "ALL"
+  vpc_id               = aws_vpc.terraform_vpc.id
+}
+
+# Correcao segunda issue
+resource "aws_default_security_group" "default" {
+  vpc_id = aws_vpc.terraform_vpc.id
+  
+  tags = {
+    Name = "my-iac-sg"
   }
 }
 
